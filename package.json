@@ -4,6 +4,7 @@
     "format:write": "prettier --write \"**/{src,test}/**/*.{ts,tsx}\" --config \".prettierrc\" --cache",
     "format:check": "prettier --check \"**/{src,test}/**/*.{ts,tsx}\" --config \".prettierrc\" --cache",
     "docker:up": "pnpm --filter flashcards-api run docker:up",
+    "docker:down": "pnpm --filter flashcards-api run docker:down",
     "start:api": "pnpm --filter flashcards-api run start:dev",
     "start:app": "pnpm --filter flashcards-app run dev",
     "start:all": "concurrently \"pnpm run start:app\" \"pnpm run start:api\""
