@@ -41,7 +41,4 @@ export class Deck {
 
   @OneToMany(() => Card, (card) => card.deck)
   cards: Card[];
-
-
-
 }

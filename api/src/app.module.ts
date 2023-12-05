@@ -13,7 +13,7 @@ import { UserController } from "./user/user.controller";
 import { JwtModule } from "@nestjs/jwt";
 import { DecksModule } from "./decks/decks.module";
 import { JwtStrategy } from "./auth/jwt.strategy";
-import { CardsModule } from './cards/cards.module';
+import { CardsModule } from "./cards/cards.module";
 
 @Module({
   imports: [

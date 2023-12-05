@@ -24,10 +24,7 @@ import { UserService } from "src/user/user.service";
 @UseGuards(JwtAuthGuard)
 @Controller("decks")
 export class DecksController {
-  constructor(
-    private readonly decksService: DecksService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly decksService: DecksService) {}
 
   @Post()
   async create(

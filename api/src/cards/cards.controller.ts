@@ -1,98 +1,121 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
-import { DecksService } from 'src/decks/decks.service';
-import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
-import { CreateCardDto } from './card-create.dto';
-import { CardResponseDto } from './card-response.dto';
-import { CardsService } from './cards.service';
-import { DeckId } from 'src/decorators/deck-id.decorator';
-import { CardOwnershipGuard } from 'src/guards/card-owner.guard';
-import { UpdateCardDto } from './card-update.dto';
-import { FindCardsQueryDTO } from './find-cards-query.dto';
-import { FindCardsResponseDTO } from './find-cards-response.dto';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from "@nestjs/common";
+import { DecksService } from "src/decks/decks.service";
+import { JwtAuthGuard } from "src/guards/jwt-auth.guard";
+import { CreateCardDto } from "./card-create.dto";
+import { CardResponseDto } from "./card-response.dto";
+import { CardsService } from "./cards.service";
+import { UpdateCardDto } from "./card-update.dto";
+import { FindCardsQueryDTO } from "./find-cards-query.dto";
+import { FindCardsResponseDTO } from "./find-cards-response.dto";
 
 @UseGuards(JwtAuthGuard)
-@Controller('/cards')
+@Controller("decks/:deckId/cards")
 export class CardsController {
   constructor(
     private readonly cardsService: CardsService,
+    private readonly decksService: DecksService,
   ) {}
 
   @Post()
-  async create (
+  async create(
     @Body() createCardDto: CreateCardDto,
-    @DeckId() deckId: string,
+    @Param("deckId") deckId: string,
   ): Promise<CardResponseDto> {
-    const card = await this.cardsService.create(createCardDto, deckId);
-    //cacard.deck.numCards++;
-    //TODO do i delete card.deck.userId here --> i think so
-    delete card.deck.userId;
-    return card;
-  }
-
-  @UseGuards(CardOwnershipGuard)
-  @Get(":id")
-  async findOne(@Param("id") id: string): Promise<CardResponseDto> {
-    const card = await this.cardsService.findOne(id);
-    if (!card) {
-        throw new NotFoundException(`Card with ID ${id} not found`);
+    const deck = await this.decksService.findOne(deckId);
+    if (!deck) {
+      throw new NotFoundException(`Deck with ID ${deckId} not found`);
     }
-    //TODO see line 23
-    delete card.deck.userId;
+    return await this.cardsService.create(createCardDto, deckId);
+  }
+
+  @Get(":cardId")
+  async findOne(
+    @Param("deckId") deckId: string,
+    @Param("cardId") cardId: string,
+  ): Promise<CardResponseDto> {
+    const deck = await this.decksService.findOne(deckId);
+    if (!deck) {
+      throw new NotFoundException(`Deck with ID ${deckId} not found`);
+    }
+    const card = await this.cardsService.findOneWithDeckID(deckId, cardId);
+    if (!card) {
+      throw new NotFoundException(`Card with ID ${cardId} not found`);
+    }
+
     return card;
   }
 
-  @UseGuards(CardOwnershipGuard)
-  @Patch(":id")
-  async update (
-    @Param("id") id: string,
+  @Patch(":cardId")
+  async update(
+    @Param("deckId") deckId: string,
+    @Param("cardId") cardId: string,
     @Body() updateCardDto: UpdateCardDto,
   ): Promise<CardResponseDto> {
-    const card = await this.cardsService.update(id, updateCardDto);
-    //TODO see line 23
-    delete card.deck.userId;
+    const deck = await this.decksService.findOne(deckId);
+    if (!deck) {
+      throw new NotFoundException(`Deck with ID ${deckId} not found`);
+    }
+    const card = await this.cardsService.update(deckId, cardId, updateCardDto);
+    if (!card) {
+      throw new NotFoundException(`Card with ID ${cardId} not found`);
+    }
+
     return card;
   }
 
-  @UseGuards(CardOwnershipGuard)
-  @Delete(":id")
-  async remove(@Param("id") id: string): Promise<CardResponseDto> {
-    const card = await this.cardsService.remove(id);
-    //card.deck.numCards--;
-    //TODO see line 23
-    delete card.deck.userId;
+  @Delete(":cardId")
+  async remove(
+    @Param("deckId") deckId: string,
+    @Param("cardId") cardId: string,
+  ): Promise<CardResponseDto> {
+    const deck = await this.decksService.findOne(deckId);
+    if (!deck) {
+      throw new NotFoundException(`Deck with ID ${deckId} not found`);
+    }
+    const card = await this.cardsService.remove(deckId, cardId);
+    if (!card) {
+      throw new NotFoundException(`Card with ID ${cardId} not found`);
+    }
+
     return card;
   }
 
   //TODO add ownership guard here?
-  //TODO is withDeckData/withUserData needed in query & response dtos?
   @Get()
   async findAll(
-    @DeckId() deckId: string,
+    @Param("deckId") deckId: string,
     @Query() query: FindCardsQueryDTO,
   ): Promise<FindCardsResponseDTO> {
-    const { limit, offset, search, withDeckData } = query;
-
+    const deck = await this.decksService.findOne(deckId);
+    if (!deck) {
+      throw new NotFoundException(`Deck with ID ${deckId} not found`);
+    }
+    const { limit, offset, search } = query;
     const cards = await this.cardsService.findAll(
-        deckId,
-        limit,
-        offset,
-        search,
-        withDeckData,
+      deckId,
+      limit,
+      offset,
+      search,
     );
 
     return {
-        limit,
-        offset,
-        search,
-        withDeckData,
-        data: cards.map((card) => {
-          delete card.deck.userId; //TODO see line 23
-          if (card.deck) {
-            delete card.deck.user.password; //TODO see line 23
-          }
-          return card as CardResponseDto;
-        }),
+      limit,
+      offset,
+      search,
+      data: cards.map((card) => {
+        return card;
+      }),
     };
   }
-
 }

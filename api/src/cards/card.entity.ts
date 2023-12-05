@@ -1,10 +1,18 @@
 import { Deck } from "src/decks/deck.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 
 @Entity()
 export class Card {
   @PrimaryGeneratedColumn("uuid")
-  id:string;
+  id: string;
 
   @Column()
   front: string;
@@ -19,11 +27,9 @@ export class Card {
   updatedAt: Date;
 
   @ManyToOne(() => Deck, (deck) => deck.cards)
-  @JoinColumn({ name: "deckId"})
+  @JoinColumn({ name: "deckId" })
   deck: Deck;
 
   @Column()
-  deckId:string;
-
-  
+  deckId: string;
 }

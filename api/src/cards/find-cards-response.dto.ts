@@ -4,6 +4,5 @@ export class FindCardsResponseDTO {
   limit?: number;
   offset?: number;
   search?: string;
-  withDeckData?: boolean;
-  data: CardResponseDto[]; 
+  data: CardResponseDto[];
 }
