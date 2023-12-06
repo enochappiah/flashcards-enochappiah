@@ -1,10 +1,10 @@
 import Sidebar from "./components/sidebar";
 import Feed from "./components/feed";
 import { Toaster } from "./components/ui/toaster";
-import { LoginDialog } from "./components/login-dialog";
+import { LoginDialog } from "./components/auth/login-dialog";
 import { useStore } from "./lib/store";
-import { LogoutDialog } from "./components/logout-dialog";
-import { RegisterDialog } from "./components/register-dialog";
+import { LogoutDialog } from "./components/auth/logout-dialog";
+import { RegisterDialog } from "./components/auth/register-dialog";
 import { useToast } from "./components/ui/use-toast";
 import { useEffect } from "react";
 import { removeAuthenticatedUserToken } from "./lib/api";

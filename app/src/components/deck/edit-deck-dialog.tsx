@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import useMutationDecks from "@/hooks/use-mutation-decks";
-import { toast } from "./ui/use-toast";
+import { toast } from "../ui/use-toast";
 import { useStore } from "@/lib/store";
 
 export const EditDeckDialog = ({

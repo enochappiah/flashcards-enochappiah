@@ -91,7 +91,6 @@ export class CardsController {
     return card;
   }
 
-  //TODO add ownership guard here?
   @Get()
   async findAll(
     @Param("deckId") deckId: string,

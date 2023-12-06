@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "../ui/use-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { PlusCircledIcon } from "@radix-ui/react-icons";
 import useMutationDecks from "@/hooks/use-mutation-decks";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "../ui/textarea";
 import { useStore } from "@/lib/store";
 
 export const AddDeckDialog = () => {

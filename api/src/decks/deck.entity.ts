@@ -39,6 +39,6 @@ export class Deck {
   @Column()
   userId: number;
 
-  @OneToMany(() => Card, (card) => card.deck)
+  @OneToMany(() => Card, (card) => card.deck, { onDelete: "CASCADE" })
   cards: Card[];
 }

@@ -1,4 +1,4 @@
-import type { DecksData, User } from "@/lib/types";
+import type { Card, DecksData, User } from "@/lib/types";
 import { getAuthenticatedUser, getAuthenticatedUserToken } from "./auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -129,6 +129,92 @@ export const editDeck = async (id: string, newTitle: string): Promise<void> => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ newTitle }),
+  });
+
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+};
+
+export const fetchCards = async (deckId: string): Promise<Card[]> => {
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(`${API_URL}/decks/${deckId}/cards`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+
+  return responseJson.data;
+};
+
+export const createCard = async (
+  deckId: string,
+  front: string,
+  back: string,
+): Promise<Card> => {
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(`${API_URL}/decks/${deckId}/cards`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ front, back }),
+  });
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+
+  return responseJson.data;
+};
+
+export const deleteCard = async (
+  deckId: string,
+  cardId: string,
+): Promise<void> => {
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(`${API_URL}/decks/${deckId}/cards/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+};
+
+export const editCard = async (
+  deckId: string,
+  cardId: string,
+  newFront: string,
+  newBack: string,
+): Promise<void> => {
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(`${API_URL}/decks/${deckId}/cards/${cardId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ newFront, newBack }),
   });
 
   const responseJson = await response.json();

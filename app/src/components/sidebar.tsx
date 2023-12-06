@@ -1,6 +1,6 @@
 import { HomeIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
-import { AddDeckDialog } from "./add-deck-dialog";
+import { AddDeckDialog } from "./deck/add-deck-dialog";
 
 const Sidebar = () => {
   return (
