@@ -20,7 +20,7 @@ export type User = {
   avatarUrl?: string;
 };
 
-//export type DeckwithCardData = Deck & { card?: Card };
+export type DeckwithCardData = Deck & { card?: Card };
 export type DecksData = Deck & { user?: User };
 export type CardWithDeckData = Card & { deck?: Deck };
 

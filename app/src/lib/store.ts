@@ -5,7 +5,7 @@ import { immer } from "zustand/middleware/immer";
 type State = {
   decks: DecksData[];
   user: User | null;
-  cards: Card[],
+  cards: Card[];
   selectedDeckId: string | null;
 };
 
@@ -19,7 +19,12 @@ type Action = {
   setCards: (cards: Card[]) => void;
   removeCard: (deckId: string, cardId: string) => void;
   addCard: (card: Card) => void;
-  editCard: (deckId: string, cardId: string, newFront: string, newBack: string) => void;
+  editCard: (
+    deckId: string,
+    cardId: string,
+    newFront: string,
+    newBack: string,
+  ) => void;
   clearCards: () => void;
   setSelectedDeckId: (id: string) => void;
   clearSelctedDeckId: () => void;
@@ -62,7 +67,7 @@ export const useStore = create<State & Action>()(
     removeCard: (deckId, cardId) => {
       const newCards = get().cards.filter((card) => {
         card.id === cardId && card.deckId === deckId;
-      })
+      });
       set({ cards: newCards });
     },
 
@@ -83,23 +88,21 @@ export const useStore = create<State & Action>()(
 
     editCard: (deckId, cardId, newFront, newBack) => {
       get().cards.map((card) => {
-        if ((card.id === cardId) && (card.deckId === deckId)) {
+        if (card.id === cardId && card.deckId === deckId) {
           return {
             ...card,
             front: newFront,
-            back: newBack
+            back: newBack,
           };
         }
         return card;
-      })
+      });
     },
 
-    clearCards: () => set({ cards: [] }) ,
+    clearCards: () => set({ cards: [] }),
 
     setSelectedDeckId: (id) => set({ selectedDeckId: id }),
 
     clearSelctedDeckId: () => set({ selectedDeckId: null }),
-
-
   })),
 );
