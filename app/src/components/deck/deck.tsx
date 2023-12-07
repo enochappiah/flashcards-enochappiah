@@ -1,3 +1,4 @@
+import DeckFooter from "./deck-footer";
 import DeckActions from "./deck-actions";
 import { DecksData } from "@/lib/types";
 
@@ -14,12 +15,17 @@ const Deck = ({ deck }: { deck: DecksData }) => {
             <div className="p-4 sm:p-5 md:p-6">
               <p className="font-semibold text-md sm:text-lg">{deck.title}</p>
               <p className="mt-1 sm:mt-2">
-                {deck.numberOfCards ? deck.numberOfCards : 0} cards
+                {deck.numCards !== undefined ? deck.numCards : 0} cards
+                
               </p>
             </div>
+            
             <div className="p-4">
               <DeckActions deckId={deck.id} deckTitle={deck.title} />
+          
             </div>
+            <div className= "absolute bottom-0 right-0 p-4"><DeckFooter deckId={deck.id}></DeckFooter></div>
+            
           </div>
         </div>
       </div>

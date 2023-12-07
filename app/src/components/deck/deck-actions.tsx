@@ -16,7 +16,6 @@ const DeckActions = ({
 }: {
   deckId: string;
   deckTitle: string;
-  username?: string;
 }) => {
   const { deleteDeckById } = useMutationDecks();
   const [isEditDialogOpen, setEditDialogOpen] = useState(false);

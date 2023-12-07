@@ -2,7 +2,7 @@ export type Deck = {
   id: string;
   title: string;
   image?: string;
-  numberOfCards: number;
+  numCards: number;
 };
 
 export type Card = {

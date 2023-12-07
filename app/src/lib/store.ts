@@ -27,7 +27,7 @@ type Action = {
   ) => void;
   clearCards: () => void;
   setSelectedDeckId: (id: string) => void;
-  clearSelctedDeckId: () => void;
+  clearSelectedDeckId: () => void;
 };
 
 const initialState: State = {
@@ -78,7 +78,7 @@ export const useStore = create<State & Action>()(
           if (deck.id === card.deckId) {
             return {
               ...deck,
-              numberOfCards: deck.numberOfCards + 1,
+              numCards: deck.numCards + 1,
             };
           }
           return deck;
@@ -103,6 +103,6 @@ export const useStore = create<State & Action>()(
 
     setSelectedDeckId: (id) => set({ selectedDeckId: id }),
 
-    clearSelctedDeckId: () => set({ selectedDeckId: null }),
+    clearSelectedDeckId: () => set({ selectedDeckId: null }),
   })),
 );

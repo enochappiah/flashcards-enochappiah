@@ -1,6 +1,7 @@
 import { HomeIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { AddDeckDialog } from "./deck/add-deck-dialog";
+import { AddCardDialog } from "./card/add-card-dialog";
 
 const Sidebar = () => {
   return (
@@ -12,6 +13,7 @@ const Sidebar = () => {
         <MagnifyingGlassIcon className="w-5 h-5" />
       </Button>
       <AddDeckDialog />
+      <AddCardDialog/>
     </div>
   );
 };

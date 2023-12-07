@@ -31,7 +31,7 @@ export const LoginDialog = () => {
     if (!username || !password) {
       toast({
         variant: "destructive",
-        title: "Sorry! Username and password cannot be empty!",
+        title: "Sorry! Username and password cannot be empty! 🙁",
         description: `Please enter your credentials to login.`,
       });
       return;
