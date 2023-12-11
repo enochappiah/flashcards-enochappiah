@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "../ui/textarea";
+import { PlusCircledIcon } from "@radix-ui/react-icons";
 import { useToast } from "@/components/ui/use-toast";
 import { useStore } from "@/lib/store";
 import useMutationCards from "@/hooks/use-mutations-cards";
@@ -22,8 +23,8 @@ export const AddCardDialog = () => {
   const { addNewCard } = useMutationCards();
   const { toast } = useToast();
   const user = useStore((state) => state.user);
-
   
+
   const handleSave = async () => {
     if (!front || !back) {
       toast({
@@ -46,13 +47,8 @@ export const AddCardDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          aria-label={"Make a Card"}
-          variant="secondary"
-          size="sm"
-          className="w-full m-2"
-        >
-          Add Card
+        <Button aria-label={"Make a Card"} variant="default" size="sm">
+          <PlusCircledIcon className="w-5 h-5" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
@@ -110,5 +106,4 @@ export const AddCardDialog = () => {
       </DialogContent>
     </Dialog>
   );
-
 };

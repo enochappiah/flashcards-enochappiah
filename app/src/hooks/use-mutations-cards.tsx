@@ -1,13 +1,27 @@
-import { createCard, deleteCard } from "@/lib/api";
+import { createCard, deleteCard, editCard } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { useToast } from "@/components/ui/use-toast";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function useMutationCards() {
   const { toast } = useToast();
+  const { deckId } = useParams();
   const addCard = useStore((state) => state.addCard);
   const removeCard = useStore((state) => state.removeCard);
-  const editCard = useStore((state) => state.editCard);
+  const editCardText = useStore((state) => state.editCardText);
   const selectedDeckId = useStore((state) => state.selectedDeckId);
+  const setSelectedDeckId = useStore((state) => state.setSelectedDeckId);
+  const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);
+  
+  useEffect(() => {
+  if (!deckId) {
+    clearSelectedDeckId();
+      
+  } else {
+   setSelectedDeckId(deckId);
+  }
+}, [setSelectedDeckId, deckId]);
 
   const addNewCard = async (front: string, back: string) => {
     try {
@@ -46,7 +60,7 @@ function useMutationCards() {
   ) => {
     try {
       await editCard(selectedDeckId as string, cardId, newFront, newBack);
-      editCard(selectedDeckId as string, cardId, newFront, newBack);
+      editCardText(selectedDeckId as string, cardId, newFront, newBack);
     } catch (error) {
       toast({
         variant: "destructive",

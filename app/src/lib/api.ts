@@ -76,6 +76,16 @@ export const fetchDecks = async (): Promise<DecksData[]> => {
   return responseJson.data;
 };
 
+export const fetchDeckById = async (id: string): Promise<DecksData> => {
+  const response = await fetch(`${API_URL}/decks/${id}?withUserData=true`);
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+  return responseJson.data;
+};
+
 export const deleteDeck = async (id: string): Promise<void> => {
   const token = getAuthenticatedUserToken();
 

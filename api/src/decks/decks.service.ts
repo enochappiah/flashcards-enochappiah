@@ -43,8 +43,15 @@ export class DecksService {
     return this.deckRepository.save(deck);
   }
 
-  async findOne(id: string): Promise<Deck | null> {
-    return this.deckRepository.findOneBy({ id });
+  async findOne(id: string, withUserData?: boolean): Promise<Deck | null> {
+    const relations = [];
+    if (withUserData) {
+      relations.push("user");
+    }
+    return this.deckRepository.findOne({
+      where: { id },
+      relations,
+    });
   }
 
   async update(id: string, updateDeckDto: UpdateDeckDto): Promise<Deck | null> {

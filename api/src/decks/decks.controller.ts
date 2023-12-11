@@ -38,12 +38,18 @@ export class DecksController {
 
   @UseGuards(DeckOwnershipGuard)
   @Get(":id")
-  async findOne(@Param("id") id: string): Promise<DeckResponseDto> {
-    const deck = await this.decksService.findOne(id);
+  async findOne(
+    @Param("id") id: string,
+    @Query("withUserData") withUserData?: boolean,
+  ): Promise<DeckResponseDto> {
+    const deck = await this.decksService.findOne(id, withUserData);
     if (!deck) {
       throw new NotFoundException(`Deck with ID ${id} not found`);
     }
     delete deck.userId;
+    if (withUserData) {
+      delete deck.user.password;
+    }
     return deck;
   }
 

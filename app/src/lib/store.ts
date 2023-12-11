@@ -14,19 +14,22 @@ type Action = {
   removeDeck: (id: string) => void;
   addDeck: (deck: DecksData) => void;
   editDeckTitle: (id: string, title: string) => void;
+
   setUser: (user: User) => void;
   clearUser: () => void;
+
   setCards: (cards: Card[]) => void;
   removeCard: (deckId: string, cardId: string) => void;
   addCard: (card: Card) => void;
-  editCard: (
+  editCardText: (
     deckId: string,
     cardId: string,
     newFront: string,
     newBack: string,
   ) => void;
   clearCards: () => void;
-  setSelectedDeckId: (id: string) => void;
+
+  setSelectedDeckId: (deckId: string) => void;
   clearSelectedDeckId: () => void;
 };
 
@@ -65,9 +68,7 @@ export const useStore = create<State & Action>()(
     setCards: (cards) => set({ cards }),
 
     removeCard: (deckId, cardId) => {
-      const newCards = get().cards.filter((card) => {
-        card.id === cardId && card.deckId === deckId;
-      });
+      const newCards = get().cards.filter((card) => card.id !== cardId || card.deckId !== deckId);
       set({ cards: newCards });
     },
 
@@ -86,8 +87,9 @@ export const useStore = create<State & Action>()(
       });
     },
 
-    editCard: (deckId, cardId, newFront, newBack) => {
-      get().cards.map((card) => {
+    editCardText: (deckId, cardId, newFront, newBack) => {
+      set({
+        cards: get().cards.map((card) => {
         if (card.id === cardId && card.deckId === deckId) {
           return {
             ...card,
@@ -96,12 +98,15 @@ export const useStore = create<State & Action>()(
           };
         }
         return card;
-      });
+      }),
+    }) ;
+     
     },
+
 
     clearCards: () => set({ cards: [] }),
 
-    setSelectedDeckId: (id) => set({ selectedDeckId: id }),
+    setSelectedDeckId: (deckId) => set({ selectedDeckId: deckId }),
 
     clearSelectedDeckId: () => set({ selectedDeckId: null }),
   })),

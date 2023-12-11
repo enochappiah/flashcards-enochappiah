@@ -62,9 +62,9 @@ export const EditDeckDialog = ({
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Post</DialogTitle>
+          <DialogTitle>Edit Deck</DialogTitle>
           <DialogDescription>
-            Provide the content of your post here.
+            Provide the content of your deck here.
           </DialogDescription>
         </DialogHeader>
         {user && (

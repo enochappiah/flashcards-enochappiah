@@ -9,7 +9,6 @@ export type Card = {
   id: string;
   front: string;
   back: string;
-  createdAt: string; //TODO needed here?
   deckId: string;
 };
 

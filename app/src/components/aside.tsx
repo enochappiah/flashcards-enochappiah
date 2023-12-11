@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { useToast } from "./ui/use-toast";
 
 const Aside = () => {
-  //const user = useStore((state) => state.user);
   const user = useStore((state) => state.user);
   const clearUser = useStore((state) => state.clearUser);
   const { toast } = useToast();
