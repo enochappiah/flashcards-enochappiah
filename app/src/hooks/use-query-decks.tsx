@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Deck } from "@/lib/types";
 
-
 function useQueryDecks() {
   const { toast } = useToast();
   const decks = useStore((state) => state.decks);

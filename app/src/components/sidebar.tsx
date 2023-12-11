@@ -15,13 +15,12 @@ const Sidebar = () => {
   const setSelectedDeckId = useStore((state) => state.setSelectedDeckId);
 
   useEffect(() => {
-  if (!deckId) {
-    clearSelectedDeckId();
-      
-  } else {
-   setSelectedDeckId(deckId);
-  }
-}, [setSelectedDeckId, deckId]);
+    if (!deckId) {
+      clearSelectedDeckId();
+    } else {
+      setSelectedDeckId(deckId);
+    }
+  }, [setSelectedDeckId, deckId]);
 
   const handleClickHome = () => {
     navigate("/");

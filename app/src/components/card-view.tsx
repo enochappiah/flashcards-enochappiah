@@ -12,14 +12,12 @@ const CardView = () => {
   const setSelectedDeckId = useStore((state) => state.setSelectedDeckId);
   const user = useStore((state) => state.user);
   const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);
-  
 
-    useEffect(() => {
+  useEffect(() => {
     if (!deckId) {
       clearSelectedDeckId();
-        
     } else {
-     setSelectedDeckId(deckId);
+      setSelectedDeckId(deckId);
     }
   }, [setSelectedDeckId, deckId]);
   return (

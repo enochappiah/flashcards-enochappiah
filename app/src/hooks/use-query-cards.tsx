@@ -2,7 +2,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { fetchCards } from "@/lib/api";
 import { useEffect } from "react";
 import { useStore } from "@/lib/store";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function useQueryCards() {
   const { toast } = useToast();
@@ -17,9 +17,8 @@ function useQueryCards() {
   useEffect(() => {
     if (!deckId) {
       clearSelectedDeckId();
-        
     } else {
-     setSelectedDeckId(deckId);
+      setSelectedDeckId(deckId);
     }
   }, [setSelectedDeckId, deckId]);
 
@@ -38,7 +37,6 @@ function useQueryCards() {
       });
     }
   };
-  
 
   useEffect(() => {
     if (selectedDeckId) {

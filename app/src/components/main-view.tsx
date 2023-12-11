@@ -6,12 +6,11 @@ import { useEffect } from "react";
 
 const MainView = () => {
   const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);
- 
+
   useEffect(() => {
     clearSelectedDeckId();
   }, []);
 
- 
   return (
     <>
       <Sidebar />

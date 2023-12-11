@@ -23,7 +23,6 @@ export const AddCardDialog = () => {
   const { addNewCard } = useMutationCards();
   const { toast } = useToast();
   const user = useStore((state) => state.user);
-  
 
   const handleSave = async () => {
     if (!front || !back) {

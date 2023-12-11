@@ -16,7 +16,6 @@ const CardActions = ({
   cardBack,
   isFlipped,
 }: {
-
   cardId: string;
   cardFront: string;
   cardBack: string;

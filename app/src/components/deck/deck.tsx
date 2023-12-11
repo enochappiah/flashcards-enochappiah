@@ -5,38 +5,34 @@ import { OpenInNewWindowIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { useStore } from "@/lib/store";
 import { SyntheticEvent, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 const Deck = ({ deck }: { deck: DecksData }) => {
   const { deckId } = useParams();
   const selectedDeckId = useStore((state) => state.selectedDeckId);
   const setSelectedDeckId = useStore((state) => state.setSelectedDeckId);
-  const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);  
+  const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);
 
-    useEffect(() => {
+  useEffect(() => {
     if (!deckId) {
       clearSelectedDeckId();
-        
     } else {
-     setSelectedDeckId(deckId);
+      setSelectedDeckId(deckId);
     }
   }, [setSelectedDeckId, deckId]);
 
   const showCards = (event: SyntheticEvent) => {
     event.preventDefault();
     if (selectedDeckId === deck.id) {
-       clearSelectedDeckId();
-     } else {
-    setSelectedDeckId(deck.id as string);
-
+      clearSelectedDeckId();
+    } else {
+      setSelectedDeckId(deck.id as string);
     }
   };
 
   // useEffect(() => {
   //   clearSelectedDeckId();
   // }, [selectedDeckId]);
-
- 
 
   return (
     <div className="border-b">
@@ -62,7 +58,9 @@ const Deck = ({ deck }: { deck: DecksData }) => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => {showCards}}
+                    onClick={() => {
+                      showCards;
+                    }}
                   >
                     <OpenInNewWindowIcon className="w-5 h-5" />
                   </Button>

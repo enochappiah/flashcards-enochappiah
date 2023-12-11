@@ -13,15 +13,14 @@ function useMutationCards() {
   const selectedDeckId = useStore((state) => state.selectedDeckId);
   const setSelectedDeckId = useStore((state) => state.setSelectedDeckId);
   const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);
-  
+
   useEffect(() => {
-  if (!deckId) {
-    clearSelectedDeckId();
-      
-  } else {
-   setSelectedDeckId(deckId);
-  }
-}, [setSelectedDeckId, deckId]);
+    if (!deckId) {
+      clearSelectedDeckId();
+    } else {
+      setSelectedDeckId(deckId);
+    }
+  }, [setSelectedDeckId, deckId]);
 
   const addNewCard = async (front: string, back: string) => {
     try {

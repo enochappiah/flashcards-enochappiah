@@ -68,7 +68,9 @@ export const useStore = create<State & Action>()(
     setCards: (cards) => set({ cards }),
 
     removeCard: (deckId, cardId) => {
-      const newCards = get().cards.filter((card) => card.id !== cardId || card.deckId !== deckId);
+      const newCards = get().cards.filter(
+        (card) => card.id !== cardId || card.deckId !== deckId,
+      );
       set({ cards: newCards });
     },
 
@@ -90,19 +92,17 @@ export const useStore = create<State & Action>()(
     editCardText: (deckId, cardId, newFront, newBack) => {
       set({
         cards: get().cards.map((card) => {
-        if (card.id === cardId && card.deckId === deckId) {
-          return {
-            ...card,
-            front: newFront,
-            back: newBack,
-          };
-        }
-        return card;
-      }),
-    }) ;
-     
+          if (card.id === cardId && card.deckId === deckId) {
+            return {
+              ...card,
+              front: newFront,
+              back: newBack,
+            };
+          }
+          return card;
+        }),
+      });
     },
-
 
     clearCards: () => set({ cards: [] }),
 

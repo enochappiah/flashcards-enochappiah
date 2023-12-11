@@ -15,11 +15,11 @@ import { toast } from "../ui/use-toast";
 import useMutationCards from "@/hooks/use-mutations-cards";
 import { useStore } from "@/lib/store";
 
-export function EditCardDialog ({
+export function EditCardDialog({
   cardId,
   cardFront,
   cardBack,
-  isOpen, 
+  isOpen,
   onClose,
 }: {
   cardId: string;
@@ -32,7 +32,6 @@ export function EditCardDialog ({
   const [back, setBack] = useState(cardBack);
   const { changeCard } = useMutationCards();
   const user = useStore((state) => state.user);
-
 
   const handleSave = async () => {
     if (!front || !back) {
@@ -98,7 +97,7 @@ export function EditCardDialog ({
           </div>
         </div>
         <DialogFooter>
-           {!user && (
+          {!user && (
             <DialogClose asChild>
               <Button>Okay</Button>
             </DialogClose>
@@ -121,9 +120,6 @@ export function EditCardDialog ({
       </DialogContent>
     </Dialog>
   );
-
 }
 
 export default EditCardDialog;
-
-
