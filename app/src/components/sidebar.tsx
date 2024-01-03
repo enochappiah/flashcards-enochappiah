@@ -1,4 +1,4 @@
-import { HomeIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { HomeIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { AddDeckDialog } from "./deck/add-deck-dialog";
 import { AddCardDialog } from "./card/add-card-dialog";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useStore } from "@/lib/store";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { SearchDeckDialog } from "./deck/search-deck-dialog";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -35,9 +36,7 @@ const Sidebar = () => {
       >
         <HomeIcon className="w-5 h-5" />
       </Button>
-      <Button aria-label={"Search"} variant="ghost" size="sm">
-        <MagnifyingGlassIcon className="w-5 h-5" />
-      </Button>
+      <SearchDeckDialog/>
       {!selectedDeckId && <AddDeckDialog />}
       {selectedDeckId && <AddCardDialog />}
     </div>

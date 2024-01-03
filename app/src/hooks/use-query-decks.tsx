@@ -1,8 +1,8 @@
-import { fetchDeckById, fetchDecks } from "@/lib/api";
+import { fetchDeckById, fetchDecks, fetchDecksByQuery } from "@/lib/api";
 import { useStore } from "@/lib/store";
 import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { Deck } from "@/lib/types";
+import { Deck, DecksData } from "@/lib/types";
 
 function useQueryDecks() {
   const { toast } = useToast();
@@ -12,9 +12,15 @@ function useQueryDecks() {
   const clearSelectedDeckId = useStore((state) => state.clearSelectedDeckId);
   const [deck, setDeck] = useState<Deck | null>(null);
 
-  const loadDecks = async () => {
+  const loadDecks = async (search?: string) => {
+    let fetchedDecks : DecksData[];
     try {
-      const fetchedDecks = await fetchDecks();
+      if (search) {
+        fetchedDecks = await fetchDecksByQuery(search);
+        //setDecks(fetchedDecks, search);
+      } else {
+        fetchedDecks = await fetchDecks();
+      }
       setDecks(fetchedDecks);
     } catch (error) {
       toast({
@@ -26,6 +32,10 @@ function useQueryDecks() {
       });
     }
   };
+
+  // const loadQueryDecks = async () => {
+
+  // }
 
   const loadDeck = async (id: string) => {
     let deck = null;
@@ -51,7 +61,9 @@ function useQueryDecks() {
     loadDecks();
   }, []);
 
-  return { decks, deck, loadDeck };
+  //TODO add useEffect hook for search param?
+
+  return { decks, deck, loadDecks };
 }
 
 export default useQueryDecks;

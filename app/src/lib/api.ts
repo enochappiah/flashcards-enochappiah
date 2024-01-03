@@ -75,6 +75,21 @@ export const fetchDecks = async (): Promise<DecksData[]> => {
   }
   return responseJson.data;
 };
+export const fetchDecksByQuery = async (search: string): Promise<DecksData[]> => {
+  const token = getAuthenticatedUserToken();
+
+  const response = await fetch(`${API_URL}/decks?search=${search}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const responseJson = await response.json();
+
+  if (!response.ok) {
+    handleError(response, responseJson.message);
+  }
+  return responseJson.data;
+};
 
 export const fetchDeckById = async (id: string): Promise<DecksData> => {
   const response = await fetch(`${API_URL}/decks/${id}?withUserData=true`);
@@ -165,6 +180,8 @@ export const fetchCards = async (deckId: string): Promise<Card[]> => {
 
   return responseJson.data;
 };
+
+
 
 export const createCard = async (
   deckId: string,

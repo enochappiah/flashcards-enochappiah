@@ -10,7 +10,8 @@ type State = {
 };
 
 type Action = {
-  setDecks: (decks: DecksData[]) => void;
+  setDecks: (decks: DecksData[], search?: string) => void;
+  setDecksByQuery: (search: string) => void;
   removeDeck: (id: string) => void;
   addDeck: (deck: DecksData) => void;
   editDeckTitle: (id: string, title: string) => void;
@@ -45,6 +46,34 @@ export const useStore = create<State & Action>()(
     ...initialState,
 
     setDecks: (decks) => set({ decks }),
+    // setDecks: (decks, search) => {
+    //   //const decksData = get().decks;
+
+    //   if (search) {
+    //     const matchedDecks = decks.filter((deck) => deck.title.match(search));
+    //     set({ decks: matchedDecks });
+    //   } else {
+    //     set({ decks });
+    //   }
+      
+    // },
+
+    setDecksByQuery: (search) => {
+      // const matchedDecks = get().decks.map((deck) => deck.title.match(search));
+      // set({decks: matchedDecks})
+      // set({
+      //   decks: get().decks.filter((deck) => {
+      //     return deck.title.match(search);
+      //   })
+      // });
+      set({
+        decks: get().decks.filter((deck) => {
+          if (deck.title.match(search)) {
+            return deck;
+          }
+        })
+      })
+    },
 
     removeDeck: (id) => {
       const newDecks = get().decks.filter((deck) => deck.id !== id);

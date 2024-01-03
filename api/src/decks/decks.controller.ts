@@ -88,10 +88,6 @@ export class DecksController {
     );
 
     return {
-      // limit,
-      // offset,
-      // search,
-      // withUserData,
       data: decks.map((deck) => {
         delete deck.userId;
         if (deck.user) {
